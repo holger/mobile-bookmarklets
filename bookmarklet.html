@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Add new bookmarklet</title>
+    <script type="text/javascript" charset="utf-8">
+      (function(){
+          var s = window.location.search.substring(1).split('&');
+          if(!s.length) return;
+          window.$_GET = {};
+          for(var i  = 0; i < s.length; i++) {
+              var parts = s[i].split('=');
+              window.$_GET[unescape(parts[0])] = unescape(parts[1]);
+          }
+      }());
+      
+      (function(){
+        document.title = $_GET['title'] || 'Add new bookmarklet';
+      }());
+    </script>
+  </head>
+  <body>
+    <content>
+      <h1>Three simple steps to your new bookmark</h1>
+      <ol>
+        <li>Bookmark this page</li>
+        <li>Edit bookmark and remove everything out of the URL from the start to #</li>
+        <li>Save the bookmark again</li>
+      </ol>
+    </content>
+  </body>
+</html>

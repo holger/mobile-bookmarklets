@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Bookmarklets</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      var bookmarklets = function () {
+          var bookmarklets = [];
+          
+          return {
+            init : function () {
+              $('a').each(function () {
+                bookmarklets.push({title: this.title, href: this.href});
+              });
+            },
+            
+            append : function (selector) {
+              $(bookmarklets).each(function() {
+                $(selector).append('<div><a href="bookmarklet.html#'+this.href+'">'+this.title+'</a></div>');
+              });
+            }
+          };
+      }();
+    
+      $(document).ready(function() {                
+        bookmarklets.init(); 
+        bookmarklets.append('content');
+      });
+    </script>
+  </head>
+  <body>
+    <content>
+      <p>Sample text with a <a href="javascript:alert('Hello Bookmarklet');" title="Hello Bookmarklet">hello bookmarklet</a></p>
+    </content>
+  </body>
+</html>
