@@ -5,28 +5,28 @@
     <title>Bookmarklets</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8">
-      var bookmarklets = function () {
+      var bookmarklets = (function () {
           var bookmarklets = [];
-          
+
           return {
             init : function () {
               $('a').each(function () {
                 bookmarklets.push({title: this.title, href: this.href});
               });
             },
-            
+
             append : function (selector) {
-              $(bookmarklets).each(function() {
-                $(selector).append('<div><a href="bookmarklet.html#'+this.href+'">'+this.title+'</a></div>');
+              $(bookmarklets).each(function () {
+                $(selector).append('<div><a href="bookmarklet.html#' + this.href + '">' + this.title + '</a></div>');
               });
             }
           };
-      }();
-    
-      $(document).ready(function() {                
-        bookmarklets.init(); 
-        bookmarklets.append('content');
-      });
+        }());
+
+        $(document).ready(function () {
+          bookmarklets.init();
+          bookmarklets.append('content');
+        }
     </script>
   </head>
   <body>
