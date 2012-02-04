@@ -3,30 +3,35 @@
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>Bookmarklets</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8">
       var bookmarklets = (function () {
           var bookmarklets = [];
 
           return {
             init : function () {
-              $('a').each(function () {
-                bookmarklets.push({title: this.title, href: this.href});
-              });
+              var i, links = document.getElementsByTagName("a");
+              if (links.length) {
+                for (i = 0; i < links.length; i += 1) {
+                  bookmarklets.push({title: links[i].title, href: links[i].href});
+                }
+              }
             },
 
-            append : function (selector) {
-              $(bookmarklets).each(function () {
-                $(selector).append('<div><a href="bookmarklet.html#' + this.href + '">' + this.title + '</a></div>');
-              });
+            append : function () {
+              var i, bookmarklet, body = document.getElementsByTagName("body")[0];
+              for (i = 0; i < bookmarklets.length; i += 1) {
+                bookmarklet = document.createElement("div");
+                bookmarklet.innerHTML = '<a href="bookmarklet.html#' + bookmarklets[i].href + '">' + bookmarklets[i].title + '</a>';
+                body.insertBefore(bookmarklet, body.firstChild);
+              }
             }
           };
         }());
 
-        $(document).ready(function () {
-          bookmarklets.init();
-          bookmarklets.append('content');
-        }
+      window.onload = function () {
+        bookmarklets.init();
+        bookmarklets.append();
+      };
     </script>
   </head>
   <body>
