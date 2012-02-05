@@ -1,51 +1,107 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>Bookmarklets</title>
-    <script id="bookmarklets" type="text/javascript">
-      (function () {
-        var i,
-          bookmarklets = [],
-          links = document.getElementsByTagName('a'),
-          body = document.getElementsByTagName('body')[0],
-          container = document.createElement('div'),
-          element,
-          html = '';
+<head>
+  <meta charset='utf-8'>
+  <title>holger/mobile-bookmarklets @ GitHub</title>
+  <script id="bookmarklets" type="text/javascript">
+    (function () {
+      var i,
+        bookmarklets = [],
+        links = document.getElementsByTagName('a'),
+        body = document.getElementsByTagName('body')[0],
+        container = document.createElement('div'),
+        element,
+        html = '';
 
-        if (body === undefined) {
-          return;
+      if (body === undefined) {
+        return;
+      }
+
+      if (links.length) {
+        for (i = 0; i < links.length; i += 1) {
+          bookmarklets.push({title: links[i].title, href: links[i].href});
         }
+      }
 
-        if (links.length) {
-          for (i = 0; i < links.length; i += 1) {
-            bookmarklets.push({title: links[i].title, href: links[i].href});
-          }
-        }
+      container.setAttribute('style', 'position: absolute; top: 0; border: 1px solid #000; background: #fff; border-radius: 15px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); padding: 2em; margin: 2em;');
+      container.innerHTML = html;
+      body.insertBefore(container, body.firstChild);
 
-        container.setAttribute('style', 'position: absolute; top: 0; border: 1px solid #000; background: #fff; border-radius: 15px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); padding: 2em; margin: 2em;');
-        container.innerHTML = html;
-        body.insertBefore(container, body.firstChild);
+      for (i = 0; i < bookmarklets.length; i += 1) {
+        element = document.createElement('a');
+        element.setAttribute('href', 'bookmarklet.html#' + bookmarklets[i].href);
+        element.innerHTML = bookmarklets[i].title;
+        container.appendChild(element);
+      }
 
-        for (i = 0; i < bookmarklets.length; i += 1) {
-          element = document.createElement('a');
-          element.setAttribute('href', 'bookmarklet.html#' + bookmarklets[i].href);
-          element.innerHTML = bookmarklets[i].title;
-          container.appendChild(element);
-        }
+    }());
+  </script>
+  <script type="text/javascript" charset="utf-8">
+    window.onload = function () {
+      var bookmarklet = document.getElementById('bookmarklets').innerHTML.replace(/^\s\s*/gm, '').replace(/\s\s*$/gm, '').replace(/\n/g, '').replace(/\"/g, "\\\"");
+      document.getElementById("bm").href = "javascript:" +  bookmarklet;
+    };
+  </script>
+  <style type="text/css">
+    body {
+      margin-top: 1.0em;
+      background-color: #f3c92b;
+      font-family: Helvetica, Arial, FreeSans, san-serif;
+      color: #000000;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+    h1 { font-size: 3.8em; color: #0c36d4; margin-bottom: 3px; }
+    h1 .small { font-size: 0.4em; }
+    h1 a { text-decoration: none }
+    h2 { font-size: 1.5em; color: #0c36d4; }
+    h3 { text-align: center; color: #0c36d4; }
+    a { color: #0c36d4; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+    pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    .footer { text-align:center; padding-top:30px; font-style: italic; }
+  </style>
+</head>
 
-      }());
-    </script>
-    <script type="text/javascript" charset="utf-8">
-      window.onload = function () {
-        var bookmarklet = document.getElementById('bookmarklets').innerHTML.replace(/^\s\s*/gm, '').replace(/\s\s*$/gm, '').replace(/\n/g, '').replace(/\"/g, "\\\"");
-        document.getElementById("bm").href = "javascript:" +  bookmarklet;
-      };
-    </script>
-  </head>
-  <body>
-    <content>
-      <p>Sample text with a <a id="bm" href="javascript:alert('Hello Bookmarklet');" title="Hello Bookmarklet">hello bookmarklet</a></p>
-    </content>
-  </body>
+<body>
+  <a href="https://github.com/holger/mobile-bookmarklets"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+  <div id="container">
+
+    <div class="download">
+      <a href="https://github.com/holger/mobile-bookmarklets/zipball/master">
+        <img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
+      <a href="https://github.com/holger/mobile-bookmarklets/tarball/master">
+        <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
+    </div>
+
+    <h1><a href="https://github.com/holger/mobile-bookmarklets">mobile-bookmarklets</a>
+      <span class="small">by <a href="https://github.com/holger">holger</a></span></h1>
+
+    <div class="description">
+      A bookmarklet to ease adding bookmarklets on mobile browsers
+    </div>
+    
+    <h2>Install</h2>
+    <p>
+      <a id="bm" title="bookmarklet" href="javascript:alert('Could not initialize bookmarklets');">Detect</a> bookmarklet and add it to your bookmarks.
+    </p>
+    
+    <h2>Contribute</h2>
+    <p>You can clone the project with <a href="http://git-scm.com">Git</a>
+      by running:
+      <pre>$ git clone git://github.com/holger/mobile-bookmarklets</pre>
+    </p>
+
+    <div class="footer">
+      get the source code on GitHub : <a href="https://github.com/holger/mobile-bookmarklets">holger/mobile-bookmarklets</a>
+    </div>
+
+  </div>
+
+</body>
 </html>
