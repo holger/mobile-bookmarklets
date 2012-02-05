@@ -28,6 +28,10 @@
           bookmarklets.push({title: title_text, href: links[i].href});
         }
       }
+      
+      if (bookmarklets.length === 0) {
+        return;
+      }
 
       container.setAttribute('style', 'z-index: 1000; position: absolute; top: 10%; left: 15%; width: 50%; border: 1px solid #000; background: #fff; border-radius: 15px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); padding: 2em;');
       container.innerHTML = html;
