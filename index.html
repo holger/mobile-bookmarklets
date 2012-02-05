@@ -3,40 +3,49 @@
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>Bookmarklets</title>
+    <script id="bookmarklets" type="text/javascript">
+      (function () {
+        var i,
+          bookmarklets = [],
+          links = document.getElementsByTagName('a'),
+          body = document.getElementsByTagName('body')[0],
+          container = document.createElement('div'),
+          element,
+          html = '';
+
+        if (body === undefined) {
+          return;
+        }
+
+        if (links.length) {
+          for (i = 0; i < links.length; i += 1) {
+            bookmarklets.push({title: links[i].title, href: links[i].href});
+          }
+        }
+
+        container.setAttribute('style', 'position: absolute; top: 0; border: 1px solid #000; background: #fff; border-radius: 15px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); padding: 2em; margin: 2em;');
+        container.innerHTML = html;
+        body.insertBefore(container, body.firstChild);
+
+        for (i = 0; i < bookmarklets.length; i += 1) {
+          element = document.createElement('a');
+          element.setAttribute('href', 'bookmarklet.html#' + bookmarklets[i].href);
+          element.innerHTML = bookmarklets[i].title;
+          container.appendChild(element);
+        }
+
+      }());
+    </script>
     <script type="text/javascript" charset="utf-8">
-      var bookmarklets = (function () {
-          var bookmarklets = [];
-
-          return {
-            init : function () {
-              var i, links = document.getElementsByTagName("a");
-              if (links.length) {
-                for (i = 0; i < links.length; i += 1) {
-                  bookmarklets.push({title: links[i].title, href: links[i].href});
-                }
-              }
-            },
-
-            append : function () {
-              var i, bookmarklet, body = document.getElementsByTagName("body")[0];
-              for (i = 0; i < bookmarklets.length; i += 1) {
-                bookmarklet = document.createElement("div");
-                bookmarklet.innerHTML = '<a href="bookmarklet.html#' + bookmarklets[i].href + '">' + bookmarklets[i].title + '</a>';
-                body.insertBefore(bookmarklet, body.firstChild);
-              }
-            }
-          };
-        }());
-
       window.onload = function () {
-        bookmarklets.init();
-        bookmarklets.append();
+        var bookmarklet = document.getElementById('bookmarklets').innerHTML.replace(/^\s\s*/gm, '').replace(/\s\s*$/gm, '').replace(/\n/g, '').replace(/\"/g, "\\\"");
+        document.getElementById("bm").href = "javascript:" +  bookmarklet;
       };
     </script>
   </head>
   <body>
     <content>
-      <p>Sample text with a <a href="javascript:alert('Hello Bookmarklet');" title="Hello Bookmarklet">hello bookmarklet</a></p>
+      <p>Sample text with a <a id="bm" href="javascript:alert('Hello Bookmarklet');" title="Hello Bookmarklet">hello bookmarklet</a></p>
     </content>
   </body>
 </html>
