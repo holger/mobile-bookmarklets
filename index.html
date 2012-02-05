@@ -12,6 +12,7 @@
         body = document.getElementsByTagName('body')[0],
         container = document.createElement('div'),
         element,
+        title_text,
         html = '';
 
       if (body === undefined) {
@@ -20,7 +21,11 @@
 
       if (links.length) {
         for (i = 0; i < links.length; i += 1) {
-          bookmarklets.push({title: links[i].title, href: links[i].href});
+          if (links[i].href.indexOf('javascript') !== 0) {
+            continue;
+          }
+          title_text = links[i].title || links[i].firstChild.nodeValue;
+          bookmarklets.push({title: title_text, href: links[i].href});
         }
       }
 
