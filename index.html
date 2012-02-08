@@ -10,10 +10,8 @@
         bookmarklets = [],
         links = document.getElementsByTagName('a'),
         body = document.getElementsByTagName('body')[0],
-        container = document.createElement('div'),
-        element,
-        title_text,
-        html = '';
+        container = document.createElement('ul'),
+        li, element, title_text, html = '';
 
       if (body === undefined) {
         return;
@@ -38,10 +36,12 @@
       body.insertBefore(container, body.firstChild);
 
       for (i = 0; i < bookmarklets.length; i += 1) {
+        li = document.createElement('li');
         element = document.createElement('a');
-        element.setAttribute('href', 'http://holger.github.com/mobile-bookmarklets/add.html#' + bookmarklets[i].href);
+        element.setAttribute('href', 'http://holger.github.com/mobile-bookmarklets/add.html?' + bookmarklets[i].title + '#' + bookmarklets[i].href);
         element.innerHTML = bookmarklets[i].title;
-        container.appendChild(element);
+        li.appendChild(element);
+        container.appendChild(li);
       }
 
     }());
